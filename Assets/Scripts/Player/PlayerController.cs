@@ -77,7 +77,7 @@ namespace Command.Player
         private bool AllUnitsUsed()
         {
 
-            Debug.Log(units.TrueForAll(unit => unit.UsedState == UnitUsedState.USED || !unit.IsAlive()));
+            
             return units.TrueForAll(unit => unit.UsedState == UnitUsedState.USED || !unit.IsAlive());
         }
 

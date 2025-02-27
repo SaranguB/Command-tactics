@@ -139,7 +139,7 @@ namespace Command.Player
 
         public void OnActionExecuted()
         {
-            Debug.Log("called");
+            
             MoveToBattlePosition(originalPosition, null, false);
             SetUsedState(UnitUsedState.USED);
             Debug.Log($"Unit {UnitID} of Player {Owner.PlayerID} marked as USED.");
