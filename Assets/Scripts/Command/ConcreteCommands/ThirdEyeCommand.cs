@@ -6,7 +6,7 @@ namespace Command.Commands
     public class ThirdEyeCommand : UnitCommand
     {
         private bool willHitTarget;
-        public CleanseCommand(CommandData commandData)
+        public ThirdEyeCommand(CommandData commandData)
         {
             this.commandData = commandData;
             willHitTarget = WillHitTarget();
