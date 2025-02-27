@@ -28,6 +28,7 @@ namespace Command.Player
             Owner = owner;
             this.unitScriptableObject = unitScriptableObject;
             UnitID = unitScriptableObject.UnitID;
+           
             originalPosition = unitPosition;
 
             InitializeView(unitPosition);
@@ -142,7 +143,7 @@ namespace Command.Player
             
             MoveToBattlePosition(originalPosition, null, false);
             SetUsedState(UnitUsedState.USED);
-            Debug.Log($"Unit {UnitID} of Player {Owner.PlayerID} marked as USED.");
+            //Debug.Log($"Unit {UnitID} of Player {Owner.PlayerID} marked as USED.");
             Owner.OnUnitTurnEnded();
             unitView.SetUnitIndicator(false);
         }

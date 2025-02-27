@@ -65,8 +65,7 @@ namespace Command.Player
 
         public void OnPlayerTurnCompleted()
         {
-            UnityEngine.Debug.Log("hi");
-
+            
             StartNextTurn();
         }
 

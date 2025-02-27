@@ -50,7 +50,6 @@ namespace Command.Player
 
             if (AllUnitsUsed())
             {
-                UnityEngine.Debug.Log("hi");
 
                 // TODO:    Need to check here if any of the players are dead. Not only the active one.
 
