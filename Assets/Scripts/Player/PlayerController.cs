@@ -1,3 +1,4 @@
+using Command.Commands;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,14 +47,19 @@ namespace Command.Player
 
         public void OnUnitTurnEnded()
         {
-            if(AllUnitsUsed())
+
+            if (AllUnitsUsed())
             {
+                UnityEngine.Debug.Log("hi");
+
                 // TODO:    Need to check here if any of the players are dead. Not only the active one.
 
                 if (AllUnitsDead())
                     playerService.PlayerDied(this);
-                else 
+                else
+                {
                     EndPlayerTurn();
+                }
             }
             else
             {
@@ -68,11 +74,21 @@ namespace Command.Player
 
         private bool IsCurrentUnitAlive() => units[activeUnitIndex].IsAlive();
 
-        private bool AllUnitsUsed() => units.TrueForAll(unit => unit.UsedState == UnitUsedState.USED || !unit.IsAlive());
+        private bool AllUnitsUsed()
+        {
+
+            Debug.Log(units.TrueForAll(unit => unit.UsedState == UnitUsedState.USED || !unit.IsAlive()));
+            return units.TrueForAll(unit => unit.UsedState == UnitUsedState.USED || !unit.IsAlive());
+        }
 
         public bool AllUnitsDead() => units.TrueForAll(unit => !unit.IsAlive());
 
-        private void EndPlayerTurn() => playerService.OnPlayerTurnCompleted();
+        private void EndPlayerTurn()
+        {
+            //UnityEngine.Debug.Log("hi");
+            playerService.OnPlayerTurnCompleted();
+        }
+
 
         public UnitController GetUnitByID(int unitId) => units.Find(unit => unit.UnitID == unitId);
 
@@ -82,7 +98,8 @@ namespace Command.Player
             units.Clear();
         }
 
-        // TODO:    What is this??
+        public void ProcessUnitCommand(UnitCommand commandToProcess) => GetUnitByID(commandToProcess.commandData.ActorUnitID).ProcessUnitCommand(commandToProcess);
+
         public void ResetCurrentActivePlayer()
         {
             units[activeUnitIndex].ResetUnitIndicator();
