@@ -1,17 +1,20 @@
 
 using Command.Player;
-
-public abstract class UnitCommand : ICommand
+namespace Command.Commands
 {
-    public int actorUnitID;
-    public int targetUnitID;
-    public int actorPlayerID;
-    public int targetPlayerID;
+    public abstract class UnitCommand : ICommand
+    {
 
-    protected UnitController actorUnit;
-    protected UnitController targetUnit;
+        public CommandData commandData;
 
-    public abstract void Execute();
+        protected UnitController actorUnit;
+        protected UnitController targetUnit;
 
-    public abstract bool WillItHitTarget();
+        public abstract void Execute();
+
+        public abstract bool WillHitTarget();
+
+        public void SetActorUnit(UnitController actorUnit) => this.actorUnit = actorUnit;
+        public void SetTargetUnit(UnitController targetUnit) => this.targetUnit = targetUnit;
+    }
 }

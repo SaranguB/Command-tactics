@@ -9,25 +9,26 @@ namespace Command.Actions
     {
         private UnitController actorUnit;
         private UnitController targetUnit;
+        private bool isSuccesful;
+
         public TargetType TargetType => TargetType.Friendly;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccesful)
         {
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
+            this.isSuccesful = isSuccesful;
 
-            actorUnit.PlayBattleAnimation(ActionType.Heal, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
+            actorUnit.PlayBattleAnimation(CommandType.Heal, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
         }
 
         public void OnActionAnimationCompleted()
         {
             GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.HEAL);
 
-            if (IsSuccessful())
+            if (isSuccesful)
                 targetUnit.RestoreHealth(actorUnit.CurrentPower);
         }
-
-        public bool IsSuccessful() => true;
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
     }
