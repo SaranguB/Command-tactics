@@ -28,7 +28,7 @@ namespace Command.Player
             Owner = owner;
             this.unitScriptableObject = unitScriptableObject;
             UnitID = unitScriptableObject.UnitID;
-           
+
             originalPosition = unitPosition;
 
             InitializeView(unitPosition);
@@ -91,7 +91,7 @@ namespace Command.Player
             SetAliveState(UnitAliveState.DEAD);
             unitView.PlayAnimation(UnitAnimations.DEATH);
         }
-        
+
         public void PlayBattleAnimation(CommandType commandType, Vector3 battlePosition, Action callback)
         {
             GameService.Instance.UIService.ResetBattleBackgroundOverlay();
@@ -140,7 +140,7 @@ namespace Command.Player
 
         public void OnActionExecuted()
         {
-            
+
             MoveToBattlePosition(originalPosition, null, false);
             SetUsedState(UnitUsedState.USED);
             //Debug.Log($"Unit {UnitID} of Player {Owner.PlayerID} marked as USED.");
@@ -150,7 +150,11 @@ namespace Command.Player
 
         public void ResetStats() => CurrentPower = unitScriptableObject.Power;
 
-        public void Revive() => SetAliveState(UnitAliveState.ALIVE);
+        public void Revive()
+        {
+            SetAliveState(UnitAliveState.ALIVE);
+            unitView.PlayAnimation(UnitAnimations.IDLE);
+        }
 
         public void Destroy() => UnityEngine.Object.Destroy(unitView.gameObject);
 
