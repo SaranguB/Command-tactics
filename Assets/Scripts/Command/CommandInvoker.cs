@@ -1,3 +1,4 @@
+using Command.Main;
 using System;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime;
@@ -19,8 +20,19 @@ namespace Command.Commands
 
         public void RegisterCommand(ICommand commandToRegister) => commandRegistery.Push(commandToRegister);
 
+        public void Undo()
+        {
+            if (!RegisterEmpty() && CommandBelongsToActivePlayer())
+                commandRegistery.Pop().Undo();
+        }
 
+        private bool RegisterEmpty() => commandRegistery.Count == 0;
 
+        private bool CommandBelongsToActivePlayer()
+        {
+            return (commandRegistery.Peek() as UnitCommand).commandData.ActorPlayerID ==
+                  GameService.Instance.PlayerService.ActivePlayerID;
+        }
     }
 }
 

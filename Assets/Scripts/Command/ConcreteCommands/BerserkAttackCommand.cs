@@ -19,5 +19,24 @@ namespace Command.Commands
             GameService.Instance.ActionService.
                 GetActionByType(CommandType.BerserkAttack).PerformAction(actorUnit, targetUnit, willHitTarget);
         }
+
+        public override void Undo()
+        {
+            if (willHitTarget)
+            {
+                if (!targetUnit.IsAlive())
+                    targetUnit.Revive();
+
+                targetUnit.RestoreHealth(actorUnit.CurrentPower * 2);
+            }
+            else
+            {
+                if (!actorUnit.IsAlive())
+                    actorUnit.Revive();
+
+                actorUnit.RestoreHealth(actorUnit.CurrentPower * 2);
+            }
+            actorUnit.Owner.ResetCurrentActiveUnit();
+        }
     }
 }
