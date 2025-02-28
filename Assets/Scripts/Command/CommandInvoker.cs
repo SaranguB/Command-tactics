@@ -1,12 +1,32 @@
 using Command.Main;
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime;
+
 
 namespace Command.Commands
 {
     public class CommandInvoker
     {
+
+        public CommandInvoker()
+        {
+            //UnityEngine.Debug.Log("hi");
+            SubscribeToEvents();
+        }
+
+        public void SubscribeToEvents()
+        {
+            UnityEngine.Debug.Log("Added");
+
+            GameService.Instance.EventService.OnReplayButtonClicked.AddListener(SetReplayStack);
+        }
+
+        public void SetReplayStack()
+        {
+            UnityEngine.Debug.Log("hi");
+            GameService.Instance.replayService.SetCommandState(commandRegistery);
+            commandRegistery.Clear();
+        }
+
         private Stack<ICommand> commandRegistery = new Stack<ICommand>();
 
         public void ProcessCommand(ICommand commandToProcess)
