@@ -22,16 +22,16 @@ namespace Command.Commands
 
         public void Undo()
         {
-            if(!RegisterEmpty() && CommandBelongsToActivePlayer())
-            commandRegistery.Pop().Undo();
+            if (!RegisterEmpty() && CommandBelongsToActivePlayer())
+                commandRegistery.Pop().Undo();
         }
 
         private bool RegisterEmpty() => commandRegistery.Count == 0;
 
         private bool CommandBelongsToActivePlayer()
         {
-          return (commandRegistery.Peek() as UnitCommand).commandData.ActorPlayerID ==
-                GameService.Instance.PlayerService.ActivePlayerID;
+            return (commandRegistery.Peek() as UnitCommand).commandData.ActorPlayerID ==
+                  GameService.Instance.PlayerService.ActivePlayerID;
         }
     }
 }
