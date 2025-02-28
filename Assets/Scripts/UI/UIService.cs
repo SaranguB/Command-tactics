@@ -3,6 +3,7 @@ using UnityEngine;
 using Command.Main;
 using Command.Input;
 using Command.Commands;
+using System;
 
 namespace Command.UI
 {
@@ -34,7 +35,16 @@ namespace Command.UI
             battleEndController = new BattleEndUIController(battleEndView);
         }
 
-        public void Init(int battleCount) => ShowBattleSelectionView(battleCount);
+        public void Init(int battleCount)
+        {
+            ShowBattleSelectionView(battleCount);
+            SubscribeToEvents();
+        }
+
+        private void SubscribeToEvents()
+        {
+            GameService.Instance.EventService.OnReplayButtonClicked.AddListener(HideBattleEndUI);
+        }
 
         private void ShowBattleSelectionView(int battleCount) => battleSelectionController.Show(battleCount);
 
@@ -50,8 +60,17 @@ namespace Command.UI
 
         public void ShowActionSelectionView(List<CommandType> executableActions)
         {
-            actionSelectionController.Show(executableActions);
-            GameService.Instance.InputService.SetInputState(InputState.SELECTING_ACTION);
+            switch(GameService.Instance.replayService.replayState)
+            {
+                case Replay.ReplayState.ACTIVE:
+                    GameService.Instance.replayService.ExecuteNext();
+                    break;
+
+                case Replay.ReplayState.DEACTIVE:
+                    actionSelectionController.Show(executableActions);
+                    GameService.Instance.InputService.SetInputState(InputState.SELECTING_ACTION);
+                    break;
+            }
         }
 
         public void ShowBattleEndUI(int winnerId)

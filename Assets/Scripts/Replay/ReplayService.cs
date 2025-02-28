@@ -1,9 +1,9 @@
 
-using System;
+
 using System.Collections.Generic;
 using Command.Commands;
 using Command.Main;
-using UnityEngine.Playables;
+
 
 namespace Command.Replay
 {
@@ -15,9 +15,8 @@ namespace Command.Replay
 
         public ReplayService() => SetReplayState(ReplayState.DEACTIVE);
 
-        private void SetReplayState(ReplayState stateToSet) => replayState = stateToSet;
+        public void SetReplayState(ReplayState stateToSet) => replayState = stateToSet;
      
-
 
         public void SetCommandState(Stack<ICommand> commandToSet) =>
             replayCommandStack = new Stack<ICommand>(commandToSet);
